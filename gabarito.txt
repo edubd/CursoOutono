@@ -50,3 +50,134 @@ for numerador in range(1,100,2):
 
 #imprime com 2 casas decimais
 print("s={:.2f}".format(s)) 
+
+#---------------------------------------------------------------
+#Aula 02-1: y = f(x) + g(x)
+#---------------------------------------------------------------
+
+h = lambda x: x**2 - 16
+
+def f(x):
+    if h(x) >= 0: return h(x)
+    else: return 1
+
+def g(x):
+    if f(x) == 0: return x**2 + 16
+    else: return 0
+
+y = lambda x: f(x) + g(x)
+
+x=5
+print(y(x))
+
+#obs.: é possível transformar f e g em lambda:
+#f = lambda x: h(x) if h(x) >= 0 else 1
+#g = lambda x: x**2 + 16 if h(x) == 0 else 0
+
+#---------------------------------------------------------------
+#Aula 02-2: função que calcula número harmônico
+#---------------------------------------------------------------
+def H(n):
+    #rejeita se n não for positivo
+    if n <= 0: return None
+    
+    H=1
+    for k in range(2,n+1): H += 1/k
+    return H
+
+#testando a função
+for n in range(1,11):
+    print("H({}) = {:.2f}".format(n, H(n)))
+    
+#---------------------------------------------------------------
+#Aula 02-3: mensagem alien
+#---------------------------------------------------------------
+def mensagem_alien(pessoa, tipo_alien):
+    if (tipo_alien == 'B') or (tipo_alien == 'b'):
+        msg = pessoa + ', eu vim em missão de paz!'
+    elif (tipo_alien == 'M') or (tipo_alien == 'm'):
+        msg = pessoa + ', eu vou te abduzir e escravizar!'
+    else:
+        msg = None
+    return msg
+
+print(mensagem_alien('Jennifer Lopez','B'))
+print(mensagem_alien('50 Cent','M'))
+
+#---------------------------------------------------------------
+#Aula 02-4: função recursiva que calcula número harmônico
+#---------------------------------------------------------------
+def H(n):
+    if n == 0: return 0
+    else:
+        return 1/n + H(n-1)
+
+#testando a função
+for n in range(0,11):
+    print("H({}) = {:.2f}".format(n, H(n)))
+
+#---------------------------------------------------------------
+#Aula 03-1: lista com 3 números
+#---------------------------------------------------------------
+l=[10,5,3]
+
+maior = max(l)
+menor = min(l)
+do_meio = sum(l) - maior - menor
+
+print(menor, do_meio, maior)
+
+#---------------------------------------------------------------
+#Aula 03-2: listas v e w
+#---------------------------------------------------------------
+v = ['#']*6 #cria lista com 6 elementos
+w = v[:]    #clona v
+print(v, w) #imprime as duas listas
+w[5] = '$'  #altera o último elemento de w
+print(v, w) #imprime as duas listas
+
+#---------------------------------------------------------------
+#Aula 03-3: os dois maiores valores de uma lista
+#---------------------------------------------------------------
+v = [84,84,86,2,85,85,0,83,23,45,84,86,1,2,85]
+print("v=",v)
+
+v.sort(reverse=True)
+
+primeiro = v[0] #acha o maior valor
+
+#acha o menor valor
+for i in range(1,len(v)):
+    if v[i] != primeiro:
+        segundo = v[i]
+        break;
+
+#imprime o maior valor e o segundo maior
+print("maior={}, segundo maior={}".format(primeiro, segundo))
+
+#---------------------------------------------------------------
+#Aula 03-4: cria listas usando fatiamento e métodos de lista
+#---------------------------------------------------------------
+cores= ['amarelo', 'azul', 'branco', 'preto', 'verde', 'vermelho']
+print("cores = ", cores)
+
+l1=cores[:2]
+print("l1 = ", l1)
+
+l2=cores[1:4]
+print("l2 = ", l2)
+
+l3 = cores[:] #preciso clonar antes para não alterar a lista original
+l3.reverse();
+print("l3 = ", l3) 
+
+l4 = cores[:] 
+l4.remove("branco");
+print("l4 = ", l4)
+
+l5=cores[3:]
+print("l5 = ", l5)
+
+l6 = cores[:]
+l6.insert(4,'rosa')
+print("l6 = ", l6)

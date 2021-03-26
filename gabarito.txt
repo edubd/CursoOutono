@@ -181,3 +181,154 @@ print("l5 = ", l5)
 l6 = cores[:]
 l6.insert(4,'rosa')
 print("l6 = ", l6)
+
+#---------------------------------------------------------------
+#Aula 03-5: multiplica valores de uma lista por -1
+#---------------------------------------------------------------
+lst = [1,2,3,4,5]
+lst2 = [x*-1 for x in lst]
+print(lst, '->', lst2)
+
+#---------------------------------------------------------------
+#Aula 03-6: número harmônico com list comprehension
+#---------------------------------------------------------------
+n = 3
+H = sum([1/k for k in range(1,n+1)])
+print(H)
+
+#---------------------------------------------------------------
+#Aula 03-7: soma da diagonal de matriz (representada em lista 2d)
+#---------------------------------------------------------------
+m=[[1,3,5,7],
+   [1,4,6,0],
+   [7,6,9,0],
+   [1,2,3,4]]
+
+diagonal = [m[i][i] for i in range(len(m))]
+
+print('elementos da diagonal: ', diagonal)
+print('soma dos elementos da diagonal: ', sum(diagonal))
+
+#---------------------------------------------------------------
+#Aula 04-1: a ED conjunto e suas operações
+#---------------------------------------------------------------
+exame = {'Bella', 'Edward', 'Renesmee'}  
+projeto = {'Jacob', 'Carlisle', 'Alice', 'Bella', 'Esme', 'Edward'}  
+
+#Quais estudantes realizaram o exame e submeteram um projeto?
+print(exame & projeto)
+
+#Que estudantes apenas realizaram o exame? 
+print(exame - projeto)
+ 
+#Que estudantes apenas submeteram o projeto?
+print(projeto - exame)
+
+#Nomes de todos os estudantes
+print(projeto | exame)
+
+#todos os estudantes que apenas realizaram o exame ou apenas submeteram o projeto (mas não as duas coisas juntas)
+print(projeto ^ exame)
+
+#---------------------------------------------------------------
+#Aula 04-2: DOJO -> palavras mais frequentes da letra de uma música
+#---------------------------------------------------------------
+
+letra = """O quê?
+Que não é, o que não pode ser que
+Não é o que não pode ser que não é
+O que não pode ser que não
+É o que não pode ser que não (diz)
+O que não pode ser que
+Não é o que não pode ser
+Que não é o que (vem!)
+O quê?
+O quê?
+O quê?
+O quê?
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é, o que não pode ser que
+Não é o que não pode ser que não é
+O que não pode ser que não
+É o que não pode ser que não (é, é, é)
+O que não pode ser que
+Não é o que não pode ser
+Que não é o que (vem!)
+O quê?
+O quê?
+O quê?
+O quê?
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Não não não é
+Não é! Não é!
+Não não não é
+Não é! Não é!
+Não não não é
+É!
+Pode ser!
+É!
+Pode ser! Pode ser! Pode ser! Pode ser!
+É!
+É! É!
+Pode ser!
+É!
+Pode ser! Pode ser! Pode ser! Pode ser!
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser, que não pode ser
+Que não pode ser que não é
+Que não é o que não pode ser, que não pode ser
+Que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Que não é o que não pode ser que não é
+Não não não é"""
+
+#PASSO 1: formata a string 
+#(remove ENTER e pontuação e converte tudo para minúsculo)
+lst_simbolos = [",", "(", ")", "'", "?", "\n"]
+for simbolo in lst_simbolos:
+    letra = letra.replace(simbolo," ")
+
+letra = letra.lower()
+
+#PASSO 2: converte a string "letra" para uma lista de palavras
+lst_letra = letra.split()
+
+#PASSO 3: gera um dicionário onde a chave é a palavra
+#         e o valor é o total de ocorrências
+dic_freq = {}
+for palavra in lst_letra:
+    if dic_freq.get(palavra) is None:
+        dic_freq[palavra] = 1
+    else:
+        dic_freq[palavra] += 1
+
+#PASSO 4: converte "dic_freq" para uma lista de tuplas "lst_freq"
+#         e ordena resultados de forma descendente pelo total de ocorrências
+lst_freq = list()
+for chave, valor in dic_freq.items():
+    lst_freq.append((valor, chave))
+
+lst_freq.sort(reverse=True)
+
+#PASSO 5: imprime os resultados. A palavra mais frequente será impressa primeiro
+#se quiser você pode fatiar (ex: lst_freq[:10] para imprimir as 10 primeiras)
+print(lst_freq)
+

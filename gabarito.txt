@@ -332,3 +332,54 @@ lst_freq.sort(reverse=True)
 #se quiser você pode fatiar (ex: lst_freq[:10] para imprimir as 10 primeiras)
 print(lst_freq)
 
+#---------------------------------------------------------------
+#Aula 05-1: classe ProgressaoAritmetica
+#           salve em um arquivo chamado pa.py 
+#---------------------------------------------------------------
+class ProgressaoAritmetica:
+    
+    #construtor
+    def __init__(self, a1, r):
+        self.a1 = a1
+        self.r = r
+    
+    #retorna o termo an
+    def termo(self, n):
+        return self.a1 + (n-1) * self.r
+
+    #retorna o termo an
+    def sequencia(self, n):
+        return [self.termo(x) for x in range(1, n+1)]
+
+    #retorna a soma dos n primeiros termos
+    def soma(self, n):
+        return (n * (self.a1 + self.termo(n))) /2 
+
+#---------------------------------------------------------------
+#Aula 05-2: programa que usa a classe ProgressaoAritmetica
+#           salve no mesmo local do arquivo "pa.py" 
+#---------------------------------------------------------------
+from pa import ProgressaoAritmetica
+
+pa1 = ProgressaoAritmetica(1,2)
+print(pa1.termo(6))
+print(pa1.soma(6))
+print(pa1.sequencia(6))
+print("\n")
+
+pa2 = ProgressaoAritmetica(9,-4)
+print(pa2.termo(5))
+print(pa2.soma(5))
+print(pa2.sequencia(5))
+print("\n")
+
+pa3 = ProgressaoAritmetica(0,0.5)
+print(pa3.termo(1))
+print(pa3.soma(1))
+print(pa3.sequencia(9))
+print("\n")
+
+pa4 = ProgressaoAritmetica(10,0)
+print(pa4.termo(20))
+print(pa4.soma(20))
+print(pa4.sequencia(20))

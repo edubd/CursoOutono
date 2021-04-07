@@ -347,7 +347,7 @@ class ProgressaoAritmetica:
     def termo(self, n):
         return self.a1 + (n-1) * self.r
 
-    #retorna o termo an
+    #retorna a sequência  com os n primeiros termos
     def sequencia(self, n):
         return [self.termo(x) for x in range(1, n+1)]
 

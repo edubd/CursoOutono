@@ -385,7 +385,7 @@ print(pa4.soma(20))
 print(pa4.sequencia(20))
 
 #---------------------------------------------------------------
-#Aula 05-3: DOJO -> CategoricalNaiveBayes (scikit-learn)
+#Aula 05-3: DOJO -> CategoricalNB() - pacote scikit-learn
 #---------------------------------------------------------------
 import pandas as pd
 from sklearn.naive_bayes import CategoricalNB

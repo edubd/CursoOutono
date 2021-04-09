@@ -492,9 +492,9 @@ print(p2 < p1)                #True
 print(p2 < p3)                #False
 
 #---------------------------------------------------------------
-#Aula 06-2: arquivos (obs.: as bases de dados usadas podem ser encontradas em "bases.zip")
+#Aula 06-2: arquivos (obs.: as bases de dados usadas podem 
+#           ser encontradas em "bases_de_dados.zip")
 #---------------------------------------------------------------
-
 #1-processa arquivo separado por colunas usando Python básico
 arq = open('ARQ_COLUNAS.txt')  #assume que arquivo está na mesma pasta do programa
 

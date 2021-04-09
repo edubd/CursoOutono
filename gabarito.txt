@@ -383,3 +383,140 @@ pa4 = ProgressaoAritmetica(10,0)
 print(pa4.termo(20))
 print(pa4.soma(20))
 print(pa4.sequencia(20))
+
+#---------------------------------------------------------------
+#Aula 05-3: DOJO -> CategoricalNaiveBayes (scikit-learn)
+#---------------------------------------------------------------
+import pandas as pd
+from sklearn.naive_bayes import CategoricalNB
+
+#------------------------------------------
+#PARTE 1: definição do BD de treinamento
+#         será estruturado um um objeto da classe DataFrame (pandas)
+#------------------------------------------
+dados = {
+      "love"        : [1,1,1,0,1,1,0,0,1,0,1,1,0,1,1],
+      "people"      : [1,0,0,0,1,1,0,1,1,1,0,1,0,1,0],
+      "relationship": [0,0,1,1,1,0,0,0,1,1,1,0,0,1,1],
+      "romance":['S','N','S','S','N','S','N','N','S','N','S','N','N','S','S']
+      }
+
+#criando um DataFrame "D" com os dados de treino
+D = pd.DataFrame(dados)
+print(D)
+
+X=D[['love', 'people','relationship']]
+Y=D['romance']
+
+#------------------------------------------
+#PARTE 2: treinar um Naive Bayes Categórico
+#         usando a classe CategoricalNB do pacote sklearn
+#------------------------------------------
+
+#2.1-instanciar um objeto chamado nbc da classe CategoricalNaiveBayes
+nbc = CategoricalNB()
+
+#2.2 treinar o modelo com o método fit
+nbc.fit(X,Y)
+
+#2.3 obter o(s) novo(s) objeto(s)
+dados_novos = {
+      "love"        : [0,0,0,0,1,1,1,1],
+      "people"      : [0,0,1,1,0,0,1,1],
+      "relationship": [0,1,0,1,0,1,0,1],
+      }
+      
+#novos = pd.DataFrame({"love":[1], "people":[0], "relationship": [1]})
+novos = pd.DataFrame(dados_novos)
+
+#2.4 classifica o(s) novo(s) objeto(s) com o método predict
+classe_novos = nbc.predict(novos)
+
+#2.5 obtem as probabilidades normalizadas
+prob_novos = nbc.predict_proba(novos)
+
+print('\n-novo(s) objeto(s):\n',novos)
+print('\n-classe(s) predita(s):\n',classe_novos)
+print('\n-probabilidades estimadas:\n',prob_novos)
+
+#---------------------------------------------------------------
+#Aula 06-1: strings - processamento básico
+#---------------------------------------------------------------
+p1 = 'Lagarto Teiú'
+
+p1_maiusc = p1.upper()       
+p1_minusc = p1.lower()       
+
+num_letras_p1 = len(p1)    
+num_letras_a = p1.count('a')    
+testa_endswith = p1.endswith('rto',4,7)    
+testa_find = p1.find('a')    
+testa_rfind = p1.rfind('a')    
+
+p1_troca = p1.replace('a','o')
+p1_split = p1.split()
+
+p2 = '  Capivara ';
+teste_strip = p2.strip();
+
+p3 = 'ei, olha isso... uma capivara!'
+sem_pontuacao = p3.translate(p3.maketrans('','',",.!")) #remove: , . !
+
+print("p1.upper()= " + p1_maiusc)
+print("p1.lower()= " + p1_minusc)
+print("len(p1)= " + str(num_letras_p1))
+print("p1.count('a')= " + str(num_letras_a))
+print("p1.endswith('rto',4,7)= ",testa_endswith)
+print("p1.find('a')= ",testa_find)
+print("p1.rfind('a')= ",testa_rfind)
+print("p1.replace('a','o')= " + p1_troca)
+print("p1.split()= ", p1_split)
+print("p2.strip()= *" + teste_strip + "*")
+print("frase com pontuacao= " + p3)
+print("frase sem pontuacao= " + sem_pontuacao)
+
+p1 = 'pássaro'
+p2 = 'PÁSSARO'
+p3 = '123'
+print(p1=='pássaro')          #True
+print(p1=='PáSSaRo')          #False
+print(p1==p2)                 #False
+print(p1.lower()==p2.lower()) #True
+print(p3 < p1)                #True 
+
+p1 = 'áaa'
+p2 = 'aaa'
+p3 = 'AAA'
+print(p1==p2)                 #False
+print(p2 < p1)                #True
+print(p2 < p3)                #False
+
+#---------------------------------------------------------------
+#Aula 06-2: arquivos (obs.: as bases de dados usadas podem ser encontradas em "bases.zip")
+#---------------------------------------------------------------
+
+#1-processa arquivo separado por colunas usando Python básico
+arq = open('ARQ_COLUNAS.txt')  #assume que arquivo está na mesma pasta do programa
+
+for linha in arq:
+    linha = linha.strip()
+    
+    v1 = int(linha[:4])
+    v2 = linha[4:9]
+    print('v1=',v1, ' v2 = ',v2)
+    
+arq.close()
+
+#2-processa arquivo CSV usando Python básico
+arq = open('CEPS.csv')  #assume que arquivo está na mesma pasta do programa
+
+arq.readline() #para pular o cabeçalho
+
+for linha in arq:
+    linha = linha.strip()
+   
+    dados = linha.split(",")
+    #print(dados)
+    print(dados[0], dados[1], dados[2])
+
+arq.close()

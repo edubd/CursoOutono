@@ -394,7 +394,7 @@ from sklearn.naive_bayes import CategoricalNB
 #PARTE 1: definição do BD de treinamento
 #         será estruturado um um objeto da classe DataFrame (pandas)
 #------------------------------------------
-dados = {
+dados_treino = {
       "love"        : [1,1,1,0,1,1,0,0,1,0,1,1,0,1,1],
       "people"      : [1,0,0,0,1,1,0,1,1,1,0,1,0,1,0],
       "relationship": [0,0,1,1,1,0,0,0,1,1,1,0,0,1,1],
@@ -402,7 +402,8 @@ dados = {
       }
 
 #criando um DataFrame "D" com os dados de treino
-D = pd.DataFrame(dados)
+D = pd.DataFrame(dados_treino)
+print('- Dados de treino:')
 print(D)
 
 X=D[['love', 'people','relationship']]
@@ -419,7 +420,7 @@ nbc = CategoricalNB()
 #2.2 treinar o modelo com o método fit
 nbc.fit(X,Y)
 
-#2.3 obter o(s) novo(s) objeto(s)
+#2.3 obter o(s) novo(s) objeto(s) para classificar
 dados_novos = {
       "love"        : [0,0,0,0,1,1,1,1],
       "people"      : [0,0,1,1,0,0,1,1],
@@ -436,8 +437,10 @@ classe_novos = nbc.predict(novos)
 prob_novos = nbc.predict_proba(novos)
 
 print('\n-novo(s) objeto(s):\n',novos)
-print('\n-classe(s) predita(s):\n',classe_novos)
-print('\n-probabilidades estimadas:\n',prob_novos)
+print('\n-classe(s) predita(s) para cada objeto:\n',classe_novos)
+print('\n-probabilidades estimadas para as classes {} e {}:\n'
+      .format(nbc.classes_[0], nbc.classes_[1]))
+print(prob_novos)
 
 #---------------------------------------------------------------
 #Aula 06-1: strings - processamento básico

@@ -583,3 +583,55 @@ print(bd)
 #obtém fatia
 fatia = bd[3:6,2:7]
 print('\nfatia:'); print(fatia)
+
+#---------------------------------------------------------------
+#Aula 07-DOJO: clustering da base "smile.csv"
+#---------------------------------------------------------------
+import numpy as np
+import matplotlib.pyplot as plt
+
+#1-carrega a base 'smile.csv' para uma matriz numpy
+nom_arq = 'https://raw.githubusercontent.com/edubd/uff2020/master/progs/smile.csv'
+m_smile = np.genfromtxt(nom_arq, delimiter=',') 
+
+#2-produz um gráfico de dispersão
+plt.figure(figsize=(8,8))
+plt.scatter(m_smile[:,0], m_smile[:,1])
+plt.title('Smile - Gráfico de Dispersão')
+plt.show()
+
+#3-Executa o clustering com o algoritmo k-means 
+from sklearn.cluster import KMeans
+
+#3.1-executa o algoritmo k-means
+modelo = KMeans(n_clusters=4, random_state=0)
+modelo.fit(m_smile)
+
+grupos = modelo.labels_
+
+#3.2-plota o gráfico com os grupos achados pelo k-means
+colormap = np.array(['red','green','blue','orange'])
+plt.figure(figsize=(8,8))
+plt.scatter(m_smile[:,0], m_smile[:,1], c=colormap[grupos], s=40)
+plt.title('Smile - Resultado do KMeans')
+plt.show()
+
+#4-Executa o clustering com o algoritmo DBSCAN
+from sklearn.cluster import DBSCAN
+from sklearn.preprocessing import StandardScaler
+
+#4.1 aplica a transformação "StandardScaler" sobre os dados originais
+#(consulte: https://towardsdatascience.com/scale-standardize-or-normalize-with-scikit-learn-6ccc7d176a02)
+m_smile_transf = StandardScaler().fit_transform(m_smile)
+
+#4.2-executa o algoritmo DBSCAN
+modelo = DBSCAN().fit(m_smile_transf)
+
+grupos = modelo.labels_
+
+#4.3-plota o gráfico com os grupos achados pelo DBSCAN
+colormap = np.array(['red','green','blue','orange'])
+plt.figure(figsize=(8,8))
+plt.scatter(m_smile[:,0], m_smile[:,1], c=colormap[grupos], s=40)
+plt.title('Smile - Resultado do DBSCAN')
+plt.show()

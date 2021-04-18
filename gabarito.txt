@@ -523,3 +523,63 @@ for linha in arq:
     print(dados[0], dados[1], dados[2])
 
 arq.close()
+
+#---------------------------------------------------------------
+#Aula 07-1: testa se array possui ao menos um valor negativo
+#---------------------------------------------------------------
+import numpy as np
+
+#cria e imprime um array 2x2 de teste com valores aleatórios entre -1 e 2
+a = np.random.randint(-1,3, size=(2, 2))
+print(a)
+
+#verifica se há algum negativo
+if True in (a < 0): 
+    print('o array possui ao menos um número negativo')
+else: 
+    print('o array NÃO possui nenhum número negativo')
+
+#---------------------------------------------------------------
+#Aula 07-2: cria array 5x6 com números entre 21 e 50
+#---------------------------------------------------------------
+import numpy as np
+
+b = np.arange(21,51).reshape(5,6)
+print(b)
+
+#---------------------------------------------------------------
+#Aula 07-3: cria array 3x10 com 1a linha=0's, 2a=1's, 3a=5's
+#---------------------------------------------------------------
+import numpy as np
+
+c = np.append(np.append(np.zeros(10, dtype=np.int32),
+             np.ones(10, dtype=np.int32)),np.repeat(5,10))
+c = c.reshape(3,10)
+print(c)
+
+#---------------------------------------------------------------
+#Aula 07-4: soma da diag. principal de matriz de ordem m
+#---------------------------------------------------------------
+import numpy as np
+
+#cria e imprime um array mxm de teste com valores aleatórios entre -5 e 5
+m = 4
+mat = np.random.randint(-5,6, size=(m, m)) 
+print(mat)
+
+#imprime a soma da diagonal
+print("soma da diag. principal = ", sum(np.diag(mat)))
+
+#---------------------------------------------------------------
+#Aula 07-5: fatiamento
+#---------------------------------------------------------------
+import numpy as np
+
+#gera a matriz solicitada
+np.random.seed(210720)     	    #estabelece a semente
+bd = np.random.randint(1, 6, size=(7,10), dtype = np.int8)
+print(bd) 
+
+#obtém fatia
+fatia = bd[3:6,2:7]
+print('\nfatia:'); print(fatia)

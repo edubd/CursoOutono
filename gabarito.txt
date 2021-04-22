@@ -635,3 +635,162 @@ plt.figure(figsize=(8,8))
 plt.scatter(m_smile[:,0], m_smile[:,1], c=colormap[grupos], s=40)
 plt.title('Smile - Resultado do DBSCAN')
 plt.show()
+
+#---------------------------------------------------------------
+#Aula 10-a: Python acessando BD sqlite, sem usar fetchall
+#---------------------------------------------------------------
+import sqlite3
+nomeBD = 'RH.db'; 
+minha_conn = sqlite3.connect(nomeBD) #(1)-Conecta com o BD
+
+c = minha_conn.cursor(); #(2)- Executa o comando SQL
+c.execute('SELECT * FROM Funcionario')
+
+for linha in c:  print(linha) #(3)-Exibe os resultados
+
+#---------------------------------------------------------------
+#Aula 10-b: Python acessando BD sqlite com fetchall
+#---------------------------------------------------------------
+import sqlite3
+nomeBD = 'RH.db'; 
+minha_conn = sqlite3.connect(nomeBD) #(1)-Conecta com o BD
+
+c = minha_conn.cursor(); #(2)- Executa o comando SQL
+c.execute('SELECT * FROM Funcionario')
+
+resultados = c.fetchall()
+print(type(resultados))
+print(resultados)
+
+#---------------------------------------------------------------
+#Aula 10-c: Python acessando BD MySQL
+#---------------------------------------------------------------
+
+#ATENÇÃO: esse exemplo não vai funcionar na máquina de vocês!
+#         só funcionaria se vocês tivessem o mysql instalado,
+#         com uma base chamada "world" e um usuário chamado
+#         "usuario_teste" com acesso a esta base!!!
+
+#https://www.w3schools.com/python/python_mysql_getstarted.asp
+import mysql.connector
+
+#(1)-Conecta com o BD#
+minha_conn = mysql.connector.connect(
+  host="localhost",
+  user="usuario_teste",
+  password="1234",
+  database = "world"
+)
+
+print(minha_conn)
+
+c = minha_conn.cursor() #(2)- Executa o comando SQL
+c.execute("SELECT name, continent FROM country")
+
+#resultados = c.fetchall()
+for linha in c:  print(linha) #(3)-Exibe os resultados
+
+minha_conn.close()
+
+#---------------------------------------------------------------
+#Aula 10-d: Importando JSON em Python
+#---------------------------------------------------------------
+import json
+
+# parsing do documento: 
+# carrega o arquivo “empregados.json” para uma ED. 
+# no caso de “empregados.json”, carrega para uma lista de dicionários
+with open("empregados.json") as f:
+    emps = json.load(f)
+
+#básico
+print (type(emps))   # é uma lista de dicionários
+print(emps)
+print("total de empregados: ", len(emps))
+
+#iterando
+for empregado in emps: print(empregado) 
+
+#concatenando nome e sobrenome
+print(emps[1]['nome'], emps[1]['sobrenome'])
+
+#buscando campo específico
+nomes = [pessoa['nome'] for pessoa in emps]; print(nomes)
+
+#fazendo buscas
+os_santos = [pessoa for pessoa in emps if  pessoa["sobrenome"]=="Santos"]
+print(os_santos)
+
+#---------------------------------------------------------------
+#Aula 10-e: Importando JSON para DataFrame pandas
+#---------------------------------------------------------------
+#import json #só precisa desse pacote se você ler o JSON de um arquivo
+import pandas as pd
+
+#informação original em JSON...
+j_filmes = [
+{
+"titulo": "JSON x CSV",
+"resumo": "o duelo entre dois formatos para representar informações",
+"ano": 2020,
+"generos": ["aventura", "ação", "ficção"]
+},
+{
+"titulo": "JSON James",
+"resumo": "a história de uma lenda do velho oeste",
+"ano": 2018,
+"generos": ["western"]
+},
+{
+"titulo": "ENCE: O Filme",
+"resumo": "Um grupo de estudantes desvenda os mistérios da Ciência de Dados",
+"ano": 2021,
+"generos": ["drama", "ação", "aventura"]
+}
+]
+
+#... é transferida para um DataFrame!
+df_filmes = pd.DataFrame(j_filmes, columns=['titulo','resumo','ano','generos'])
+
+#Exemplo de exploração com a pandas I
+#imprimindo linhas e colunas específicas
+print(df_filmes.columns)
+print('\n-apenas os gêneros filme 1:')
+print(df_filmes.iloc[0,3])
+print('\n-filme 3 (todas as informações):')
+print(df_filmes.iloc[2])
+
+#Exemplo de exploração com a pandas II
+#verifica quais filmes têm o gênero "aventura"
+def tem_genero(lista_generos, nome_genero):
+    if nome_genero in lista_generos: 
+        return 1
+    else: return 0 
+
+filtro = df_filmes['generos'].apply(tem_genero, args=('aventura',))
+
+print('- Filmes de aventura (1=Sim, 0=Não): ')
+print(filtro)
+print('\n- Total de filmes de aventura (1=Sim, 0=Não): ')
+print(filtro.value_counts())
+
+#---------------------------------------------------------------
+#Aula 10-f: Web Scraper "fuleiro"
+#---------------------------------------------------------------
+import urllib.request
+
+#PASSO 1: obter o HTML da página-alvo
+endPagina = "https://web.ics.purdue.edu/~gchopra/class/public/pages/webdesign/05_simple.html"
+conteudo = urllib.request.urlopen(endPagina).read()
+
+conteudo = conteudo.decode('utf-8') #converte conteúdo baixado de bytes para string
+
+#PASSO 2: extrair informação de interesse usando XPath
+from lxml import etree
+arvore = etree.HTML(conteudo) #importal HTML para árvore DOM em memória
+
+#obtém todos os textos associados à tag h2 usando XPath
+r1 = arvore.xpath('//h2/text()')
+print(r1)
+
+#Tutorial sobre XPath -> http://www2.ic.uff.br/~vanessa/material/gdse/07-XPath.pdf
